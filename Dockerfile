@@ -12,8 +12,8 @@ ARG JAR_FILE=target/github-info-collector-1.0-SNAPSHOT.jar
 ARG GITHUB_FILE=.github
 
 ENV GITHUB_COLLECTOR_TYPE='File'
-ENV GITHUB_USER_NAME='aspnetboilerplate'
-ENV GITHUB_REPO_NAME='aspnetboilerplate'
+ENV GITHUB_USER_NAME='imrecetin'
+ENV GITHUB_REPO_NAME='github-info-collecotr'
 
 # Add the application's jar to the container
 ADD ${JAR_FILE} github-info-collector.jar
@@ -32,8 +32,14 @@ ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/github-inf
 #docker build --build-arg GITHUB_FILE=/home/cetinimre/.github -t github-info-collector .
 #docker build --build-arg GITHUB_FILE=~/.github -t github-info-collector .
 #docker build -t github-info-collector .
+#docker build -t github-info-collector:forkers .
+#docker build -t github-info-collector:stragezers .
+#docker build -t github-info-collector:watchers .
 #docker run github-info-collector
-#docker run --name=github-info-collector -v /outputfiles:/outputfiles -e GITHUB_COLLECTOR_TYPE='File' -e GITHUB_USER_NAME='aspnetboilerplate' -e GITHUB_REPO_NAME='aspnetboilerplate' github-info-collector
+#docker run --name=github-info-collector -v /outputfiles:/outputfiles -e GITHUB_COLLECTOR_TYPE='File' -e GITHUB_USER_NAME='imrecetin' -e GITHUB_REPO_NAME='github-info-collecotr' github-info-collector:stragezers
+#docker run --name=github-info-collector_forkers -v /outputfiles:/outputfiles -e GITHUB_COLLECTOR_TYPE='File' -e GITHUB_USER_NAME='imrecetin' -e GITHUB_REPO_NAME='github-info-collecotr' github-info-collector:forkers
+#docker run --name=github-info-collector_watchers -v /outputfiles:/outputfiles -e GITHUB_COLLECTOR_TYPE='File' -e GITHUB_USER_NAME='imrecetin' -e GITHUB_REPO_NAME='github-info-collecotr' github-info-collector:watchers
+
 
 #docker exec -it <mycontainer> /bin/sh
-#docker run -ti --name=Container5 --volumes-from Container4 ubuntu --shared volumes between multiple containers (volume-from)
+#docker run -ti --name=Container5 --volumes-from Container4 ubuntu   --shared volumes between multiple containers (volume-from)
