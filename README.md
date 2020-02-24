@@ -3,9 +3,11 @@
 You can collect user information that stars, forks and watch a repository
 
 ### Prerequisites
-
+```
+JDK 1.8 or above
+Maven
+```
 You should install to Docker Engine to achieve this demo :
-
 ```
 https://www.docker.com/get-started
 ```
