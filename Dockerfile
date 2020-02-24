@@ -13,7 +13,7 @@ ARG GITHUB_FILE=.github
 
 ENV GITHUB_COLLECTOR_TYPE='File'
 ENV GITHUB_USER_NAME='imrecetin'
-ENV GITHUB_REPO_NAME='github-info-collecotr'
+ENV GITHUB_REPO_NAME='github-info-collector'
 
 # Add the application's jar to the container
 ADD ${JAR_FILE} github-info-collector.jar
@@ -36,9 +36,9 @@ ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/github-inf
 #docker build -t github-info-collector:stragezers .
 #docker build -t github-info-collector:watchers .
 #docker run github-info-collector
-#docker run --name=github-info-collector -v /outputfiles:/outputfiles -e GITHUB_COLLECTOR_TYPE='File' -e GITHUB_USER_NAME='imrecetin' -e GITHUB_REPO_NAME='github-info-collecotr' github-info-collector:stragezers
-#docker run --name=github-info-collector_forkers -v /outputfiles:/outputfiles -e GITHUB_COLLECTOR_TYPE='File' -e GITHUB_USER_NAME='imrecetin' -e GITHUB_REPO_NAME='github-info-collecotr' github-info-collector:forkers
-#docker run --name=github-info-collector_watchers -v /outputfiles:/outputfiles -e GITHUB_COLLECTOR_TYPE='File' -e GITHUB_USER_NAME='imrecetin' -e GITHUB_REPO_NAME='github-info-collecotr' github-info-collector:watchers
+#docker run --name=github-info-collector -v /outputfiles:/outputfiles -e GITHUB_COLLECTOR_TYPE='File' -e GITHUB_USER_NAME='imrecetin' -e GITHUB_REPO_NAME='github-info-collector' github-info-collector:stragezers
+#docker run --name=github-info-collector_forkers -v /outputfiles:/outputfiles -e GITHUB_COLLECTOR_TYPE='File' -e GITHUB_USER_NAME='imrecetin' -e GITHUB_REPO_NAME='github-info-collector' github-info-collector:forkers
+#docker run --name=github-info-collector_watchers -v /outputfiles:/outputfiles -e GITHUB_COLLECTOR_TYPE='File' -e GITHUB_USER_NAME='imrecetin' -e GITHUB_REPO_NAME='github-info-collector' github-info-collector:watchers
 
 
 #docker exec -it <mycontainer> /bin/sh
