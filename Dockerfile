@@ -35,10 +35,12 @@ ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/github-inf
 #docker build -t github-info-collector:forkers .
 #docker build -t github-info-collector:stragezers .
 #docker build -t github-info-collector:watchers .
+#docker build -t github-info-collector:contributors .
 #docker run github-info-collector
 #docker run --name=github-info-collector -v /outputfiles:/outputfiles -e GITHUB_COLLECTOR_TYPE='File' -e GITHUB_USER_NAME='imrecetin' -e GITHUB_REPO_NAME='github-info-collector' github-info-collector:stragezers
 #docker run --name=github-info-collector_forkers -v /outputfiles:/outputfiles -e GITHUB_COLLECTOR_TYPE='File' -e GITHUB_USER_NAME='imrecetin' -e GITHUB_REPO_NAME='github-info-collector' github-info-collector:forkers
 #docker run --name=github-info-collector_watchers -v /outputfiles:/outputfiles -e GITHUB_COLLECTOR_TYPE='File' -e GITHUB_USER_NAME='imrecetin' -e GITHUB_REPO_NAME='github-info-collector' github-info-collector:watchers
+#docker run --name=github-info-collector_contributors -v /outputfiles:/outputfiles -e GITHUB_COLLECTOR_TYPE='File' -e GITHUB_USER_NAME='imrecetin' -e GITHUB_REPO_NAME='github-info-collector' github-info-collector:contributors
 
 
 #docker exec -it <mycontainer> /bin/sh
