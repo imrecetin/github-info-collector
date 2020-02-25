@@ -8,7 +8,7 @@ LABEL maintainer="ctn.imre@gmail.com"
 EXPOSE 8080
 
 # The application's jar file
-ARG JAR_FILE=target/github-info-collector-1.0-SNAPSHOT.jar
+ARG JAR_FILE=target/github-info-collector*-SNAPSHOT.jar
 ARG GITHUB_FILE=.github
 
 ENV GITHUB_COLLECTOR_TYPE='File'
