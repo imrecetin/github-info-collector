@@ -27,6 +27,7 @@ public class GithubInfoCollectorToFile extends GithubInfoCollector {
     private static final String STRAGEZERS_FILE_PREFIX="stragezers";
     private static final String FORKERS_FILE_PREFIX="forkers";
     private static final String WATCHERS_FILE_PREFIX="watchers";
+    private static final String CONTRIBUTORS_FILE_PREFIX="contributors";
 
     public GithubInfoCollectorToFile(){
         createDirectories();
@@ -114,6 +115,45 @@ public class GithubInfoCollectorToFile extends GithubInfoCollector {
         }
     }
 
+    @Override
+    public void collectContributors(String userName, String repoName) {
+        try{
+            GitHub github = GitHub.connect();
+            final PagedSearchIterable<GHRepository> repositories = github.searchRepositories().user(userName).repo(repoName).list();
+            final PagedIterator<GHRepository> repoIterator = repositories.iterator();
+            while(repoIterator.hasNext()){
+                final GHRepository currentRepo = repoIterator.next();
+                final List<String> existingContributors = readExistingContributors(currentRepo);
+                final PagedIterable<GHRepository.Contributor> currentRepoContributors = currentRepo.listContributors();
+                final PagedIterator<GHRepository.Contributor> contributorPagedIterator = currentRepoContributors.iterator();
+                while(contributorPagedIterator.hasNext()){
+                    final GHUser contributorUser = contributorPagedIterator.next();
+                    if (!existingContributors.contains(contributorUser.getLogin())){
+                        appendToContributor(contributorUser,currentRepo);
+                    }
+                }
+            }
+        }catch (IOException ioException) {
+            logger.error("IOException: ", ioException);
+        }
+    }
+
+    private List<String> readExistingContributors(GHRepository currentRepo) {
+        final Path contributorsPath = Paths.get(Paths.get("").toAbsolutePath() + "/outputfiles/" + currentRepo.getName() + "_" + CONTRIBUTORS_FILE_PREFIX + ".txt");
+        List<String> existingContributors=Collections.emptyList();
+        if (Files.exists(contributorsPath)){
+            try(Stream<String> fileLinesStream =Files.lines(contributorsPath)) {
+                existingContributors = fileLinesStream.map(line -> {
+                    final String[] splittedLine = line.split(";");
+                    return splittedLine[0];
+                }).collect(Collectors.toList());
+            }catch (IOException ioException){
+                logger.error("IOException: ", ioException);
+            }
+        }
+        return existingContributors;
+    }
+
     private List<String> readExistingForkers(final GHRepository currentRepo) {
         final Path forkersPath = Paths.get(Paths.get("").toAbsolutePath() + "/outputfiles/" + currentRepo.getName() + "_" + FORKERS_FILE_PREFIX + ".txt");
         List<String> existingForkers=Collections.emptyList();
@@ -178,6 +218,25 @@ public class GithubInfoCollectorToFile extends GithubInfoCollector {
         final List<String> fileLines= Arrays.asList(String.join(";", login, email, name, location, company));
         final Path write = Files.write(Paths.get(Paths.get("").toAbsolutePath()+"/outputfiles/"+currentRepo.getName()+"_"+STRAGEZERS_FILE_PREFIX+".txt"), fileLines ,UTF_8, APPEND,CREATE);
     }
+
+
+    private void appendToContributor(final GHUser contributorUser, final GHRepository currentRepo) throws IOException {
+        final String login=contributorUser.getLogin();
+        final String email=contributorUser.getEmail();
+        final String name=contributorUser.getName();
+        final String location=contributorUser.getLocation();
+        final String company=contributorUser.getCompany();
+        System.out.println("--------------------------------------------------------------------");
+        System.out.println("Github User Name : "+login);
+        System.out.println("User Email : "+email);
+        System.out.println("Name Surname: "+name);
+        System.out.println("User Location : "+location);
+        System.out.println("User Company : "+company);
+        System.out.println("--------------------------------------------------------------------");
+        final List<String> fileLines= Arrays.asList(String.join(";", login, email, name, location, company));
+        final Path write = Files.write(Paths.get(Paths.get("").toAbsolutePath()+"/outputfiles/"+currentRepo.getName()+"_"+CONTRIBUTORS_FILE_PREFIX+".txt"), fileLines ,UTF_8, APPEND,CREATE);
+    }
+
 
     private  void appendToWatcher(final GHUser watcherUser,final GHRepository currentRepo) throws IOException {
         final String login=watcherUser.getLogin();

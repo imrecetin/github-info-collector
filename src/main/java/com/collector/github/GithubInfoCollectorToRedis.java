@@ -19,4 +19,9 @@ public class GithubInfoCollectorToRedis extends GithubInfoCollector {
     public void collectWatchers(String userName, String repoName) {
 
     }
+
+    @Override
+    public void collectContributors(String userName, String repoName) {
+
+    }
 }

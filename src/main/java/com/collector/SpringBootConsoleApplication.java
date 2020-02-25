@@ -34,8 +34,9 @@ public class SpringBootConsoleApplication implements CommandLineRunner
             userName=args[1];
             repoName=args[2];
         }
-        githubInfoCollectorFactory.of(githubInfoCollectorType.get()).collectStragezers(userName,repoName);
+        //githubInfoCollectorFactory.of(githubInfoCollectorType.get()).collectStragezers(userName,repoName);
         //githubInfoCollectorFactory.of(githubInfoCollectorType.get()).collectForkers(userName,repoName);
         //githubInfoCollectorFactory.of(githubInfoCollectorType.get()).collectWatchers(userName,repoName);
+        githubInfoCollectorFactory.of(githubInfoCollectorType.get()).collectContributors(userName,repoName);
     }
 }
